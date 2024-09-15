@@ -5,8 +5,19 @@ work:'Evgeniy Onegin'},
 class Library {
     #books = [];
     constructor(books = this.#books){
-        this.#books = books;
-    };
+        const allZip = []
+        let book;
+        for (book of books) {
+            allZip.push(`${book.author} ${book.work}`);
+        }
+        const zipSet = new Set(allZip);
+        
+        if (allZip.length == zipSet.size){
+        this.#books = books;}
+        else {
+            console.log('Имеются дубликаты книг');
+        }
+        };
     
     showAllBooks(){
         console.log(this.#books);
@@ -35,7 +46,6 @@ class Library {
         for (book of this.#books){
             allWorks.push(book.work);
         };
-        console.log(allWorks);
         if (allWorks.includes(title)) {
             for (book of this.#books){
                 if (book.work === title) {
@@ -50,7 +60,7 @@ class Library {
                 return;
             }
             
-            hasBook(title) {
+    hasBook(title) {
                 const allWorks = [];
                 let book;
                 for (book of this.#books){
@@ -71,3 +81,5 @@ firstLibrary.showAllBooks();
 firstLibrary.removeBook('Tihiy Don');
 firstLibrary.showAllBooks();
 console.log(firstLibrary.hasBook('Molodaya Gvardia'));
+const dublicatBooks = [{author: "A", work: "Aa"}, {author: "A", work: "Aa"}]
+const dublicatLibrary = new Library(dublicatBooks);
