@@ -48,9 +48,18 @@ class Library {
         }
             console.log('Книга с указанным названием не числится')
                 return;
+            }
             
-        
-    }
+            hasBook(title) {
+                const allWorks = [];
+                let book;
+                for (book of this.#books){
+                    if (book.work === title) {
+                        return true;
+                    }
+                }
+                return false;
+            }
 }
 
 const firstLibrary = new Library(newBooks);
@@ -61,3 +70,4 @@ firstLibrary.addBook({author:'Mihail Sholohov',work: 'Tihiy Don'});
 firstLibrary.showAllBooks();
 firstLibrary.removeBook('Tihiy Don');
 firstLibrary.showAllBooks();
+console.log(firstLibrary.hasBook('Molodaya Gvardia'));
