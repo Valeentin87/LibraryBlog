@@ -24,13 +24,40 @@ class Library {
             console.log('данное произведение уже есть в каталоге библиотеки');
             return;
         }
-        this.#books.push(title);
+        this.#books.push({author: `${title.author}`,work: `${title.work}`});
         console.log("произведение добавлено");
+    }
+    
+    removeBook(title){
+        const allWorks = [];
+        let book;
+        let removeIndex;
+        for (book of this.#books){
+            allWorks.push(book.work);
+        };
+        console.log(allWorks);
+        if (allWorks.includes(title)) {
+            for (book of this.#books){
+                if (book.work === title) {
+                    removeIndex = this.#books.indexOf({author: `${book.author}`, work: `${title}`});
+                    this.#books.pop(removeIndex);
+                    console.log('Книга с указанным названием удалена');
+                    return;
+                }
+            }
+        }
+            console.log('Книга с указанным названием не числится')
+                return;
+            
+        
     }
 }
 
 const firstLibrary = new Library(newBooks);
 firstLibrary.showAllBooks();
-firstLibrary.addBook({'Mihail Sholohov':'Tihiy Don'});
-firstLibrary.addBook({'Mihail Sholohov': 'Tihiy Don'});
+firstLibrary.addBook({author: 'Mihail Sholohov', work:'Tihiy Don'});
+console.log("××××××после добавления×××××××")
+firstLibrary.addBook({author:'Mihail Sholohov',work: 'Tihiy Don'});
+firstLibrary.showAllBooks();
+firstLibrary.removeBook('Tihiy Don');
 firstLibrary.showAllBooks();
