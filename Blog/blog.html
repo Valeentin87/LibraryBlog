@@ -7,7 +7,7 @@
     <title>Blog</title>
 </head>
 <body>
-<script>
+<script defer>
 const initialData = [
 {
 product: "Apple iPhone 13",
@@ -41,6 +41,88 @@ text: "Люблю играть на PS5, графика на высоте.",
 ],
 },
 ];
+
+class Product {
+    reviews = [];
+    constructor(model = "Место для Вашего товара", reviews) {
+        this.reviews = reviews;
+        this.model = model;
+    }
+    
+}
+
+function ready () {
+    alert("Dom готов !");
+}
+
+document.addEventListener("DOMContentLoaded", ready);
+
+function makeProductContent (product) {
+    const productName = product.model;
+    const reviewsOfProduct = product.reviews;
+    let productContent = '';
+    let par;
+    
+    reviewsOfProduct.forEach((reviw) => {
+        console.log(reviw.text);
+        par = `<p>${reviw.text}</p>`;
+        productContent += par;
+        console.log(productContent);
+    });
+    productContent = `<h3 class = "product_head"> ${productName}</h3><div class='reviews_container'>"${ productContent}"</div>`;
+    console.log(productContent);
+    return productContent;
+}
+
+function getInnerText (elem) {
+    console.log(elem.InnerText);
+}
+const allProducts = [];
+initialData.forEach((prod) => {
+    //console.log(prod.product);
+    //console.log(prod.reviews);
+    allProducts.push(new Product(prod.product, prod.reviews));
+});
+
+let allProductsInfo = [];
+allProducts.forEach((prod) => {
+    console.log(prod.reviews);
+    allProductsInfo.push(makeProductContent(prod).trim());
+});
+let allProdContent = allProductsInfo.join("");
+//console.log(allProdContent);
+
+
+
+
+let divContainer = document.createElement('div');
+divContainer.class = 'container';
+divContainer.innerHTML = '<h1 class = "main_head">Статистика отзывов по товарам</h1><p>выберите товар о котором хотите оставить отзыв и нажмите на него...</p></div>';
+document.body.appendChild(divContainer);
+let productContainer = document.createElement('div');
+productContainer.class = 'product_container';
+productContainer.innerHTML = "<div class='entry_review'><p>Введите текст отзыва</p><input type='text' id='text_review' name='input_text' required minlength='15' maxlength='50' size='10' /><button>Опубликовать</button></div>";
+const mainHead = document.getElementsByClassName("main_head");
+mainHead[0].appendChild(productContainer);
+
+let reviewsContainer = document.createElement('div');
+reviewsContainer.innerHTML = allProdContent;
+reviewsContainer.class = 'reviews_container';
+productContainer.appendChild(reviewsContainer);
+
+const allProductHeads = document.getElementsByClassName("product_head");
+console.log("^^^^^^"+ allProductHeads);
+let headCurrent;
+
+for (headCurrent of allProductHeads) {
+    console.log(headCurrent.InnerHTML);
+    headCurrent.addEventListener('click',  () => {
+        console.log("ok");
+        return headCurrent.InnerText;
+});
+};
+
+
 </script>   
 </body>
 </html>
