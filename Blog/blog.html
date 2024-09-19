@@ -74,9 +74,7 @@ function makeProductContent (product) {
     return productContent;
 }
 
-function getInnerText (elem) {
-    console.log(elem.InnerText);
-}
+
 const allProducts = [];
 initialData.forEach((prod) => {
     //console.log(prod.product);
@@ -113,14 +111,21 @@ productContainer.appendChild(reviewsContainer);
 const allProductHeads = document.getElementsByClassName("product_head");
 console.log("^^^^^^"+ allProductHeads);
 let headCurrent;
+let inputText = document.getElementById("text_review");
+console.log(inputText);
+function getInnerText () {
+    console.log(this.textContent);
+    inputText.value = this.textContent;
+}
 
+let eventClick;
 for (headCurrent of allProductHeads) {
-    console.log(headCurrent.InnerHTML);
-    headCurrent.addEventListener('click',  () => {
-        console.log("ok");
-        return headCurrent.InnerText;
-});
+    console.log(headCurrent.textContent);
+    eventClick = getInnerText;
+    headCurrent.addEventListener('click', eventClick)
+    
 };
+
 
 
 </script>   
