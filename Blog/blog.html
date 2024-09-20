@@ -111,12 +111,38 @@ productContainer.appendChild(reviewsContainer);
 const allProductHeads = document.getElementsByClassName("product_head");
 console.log("^^^^^^"+ allProductHeads);
 let headCurrent;
+let flagModel;
 let inputText = document.getElementById("text_review");
 console.log(inputText);
 function getInnerText () {
     console.log(this.textContent);
-    inputText.value = this.textContent;
+    inputText.value = `вветите текст отзыва о товаре:\n${this.textContent}`;
+    let classArray = this.className.split(' ');
+    console.log(classArray);
+    console.log(classArray.indexOf('changeProd'));
+    if (classArray.indexOf('changeProd') === -1) {
+       this.className += ' changeProd';   
+    }
+};
+const changeElement = document.getElementsByClassName('changeProd');
+function addComment () {
+   
+   let inputValue = document.getElementsByTagName('input');
+   let nextElement = changeElement[0].nextSibling;
+   nextElement.innerHTML += `<p>${inputValue[0].value}</p>`;
+   let classStr = changeElement[0].classList;
+   console.log("список классов " +classStr);
+   console.log(typeof classStr);
+   let classArray = String(classStr).split(' ');
+   (classArray.indexOf('changeProd')) !== -1 && classArray.splice(classArray.indexOf('changeProd'), 1);
+   
+   console.log("после удаления "+ changeElement[0].classList);
+   console.log(nextElement.textContent);
+   inputValue.value = "Выберите модель телефона для оставления комментария к нему...";
 }
+
+let btnSend = document.getElementsByTagName('button');
+btnSend[0].addEventListener('click', addComment);
 
 let eventClick;
 for (headCurrent of allProductHeads) {
@@ -125,7 +151,6 @@ for (headCurrent of allProductHeads) {
     headCurrent.addEventListener('click', eventClick)
     
 };
-
 
 
 </script>   
