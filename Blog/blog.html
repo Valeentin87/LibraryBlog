@@ -55,6 +55,7 @@ function ready () {
     alert("Dom готов !");
 }
 
+let changeElement;
 document.addEventListener("DOMContentLoaded", ready);
 
 function makeProductContent (product) {
@@ -117,28 +118,38 @@ console.log(inputText);
 function getInnerText () {
     console.log(this.textContent);
     inputText.value = `вветите текст отзыва о товаре:\n${this.textContent}`;
-    let classArray = this.className.split(' ');
-    console.log(classArray);
-    console.log(classArray.indexOf('changeProd'));
-    if (classArray.indexOf('changeProd') === -1) {
-       this.className += ' changeProd';   
+    
+    if (!this.classList.contains('changeProd')) {
+       this.classList.add('changeProd');   
     }
 };
-const changeElement = document.getElementsByClassName('changeProd');
+
 function addComment () {
-   
+    changeElement;
+   changeElement = document.getElementsByClassName('changeProd');
+   console.log(changeElement[0])
    let inputValue = document.getElementsByTagName('input');
+   console.log("текст формы : " + inputValue[0].value)
+   console.log(typeof inputValue[0].value)
    let nextElement = changeElement[0].nextSibling;
-   nextElement.innerHTML += `<p>${inputValue[0].value}</p>`;
+   
+   if ((inputValue[0].value.length < 15) || (inputValue[0].value.length > 50 ))
+   {
+       console.log("длина комментария "+ inputValue[0].value.length)
+       console.log("комментарий не проходит по условиям...");
+       inputValue[0].value = 'Invalid comment!!!!';
+   }
+   else {
+       console.log("длина комментария " + inputValue[0].value.length)
+       nextElement.innerHTML += `<p>${inputValue[0].value}</p>`;
    let classStr = changeElement[0].classList;
    console.log("список классов " +classStr);
-   console.log(typeof classStr);
-   let classArray = String(classStr).split(' ');
-   (classArray.indexOf('changeProd')) !== -1 && classArray.splice(classArray.indexOf('changeProd'), 1);
+   changeElement[0].classList.remove('changeProd');
    
    console.log("после удаления "+ changeElement[0].classList);
    console.log(nextElement.textContent);
-   inputValue.value = "Выберите модель телефона для оставления комментария к нему...";
+   inputValue[0].value = "Выберите модель телефона для оставления комментария к нему...";
+   }
 }
 
 let btnSend = document.getElementsByTagName('button');
